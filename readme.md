@@ -23,12 +23,14 @@
       - [Automation](#automation)
     - [Database scalling](#database-scalling)
     - [Millions of users and beyond](#millions-of-users-and-beyond)
+    - [Reference materials](#reference-materials)
   - [Back-of-the-envelope Estimation](#back-of-the-envelope-estimation)
     - [Power of two](#power-of-two)
     - [Latency numbers every programmer should know](#latency-numbers-every-programmer-should-know)
     - [Availability Numbers](#availability-numbers)
     - [Example: Etimqate Twitter QPS and storage requirements](#example-etimqate-twitter-qps-and-storage-requirements)
     - [Tips](#tips)
+    - [Reference Materials](#reference-materials-1)
 
 ## Scale from Zero to Millions of Users
 
@@ -167,6 +169,7 @@ Sharding is a great technique to scale your database. But it comes with some lim
   - If a user is very popular, it can cause a lot of traffic to a single shard
 - Joins are difficult
 - Denormalization is required
+-
 
 ### Millions of users and beyond
 
@@ -180,6 +183,47 @@ Scaling a system is an iterative process. Iterating on what we have learned in t
 - Scale your data tier by sharding
 - Split tiers into individual services
 - Monitor your system and use automation tools
+
+### Reference materials
+
+Reference materials
+[1] Hypertext Transfer Protocol: <https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol>
+
+[2] Should you go Beyond Relational Databases?:
+<https://blog.teamtreehouse.com/should-you-go-beyond-relational-databases>
+
+[3] Replication: <https://en.wikipedia.org/wiki/Replication_(computing)>
+
+[4] Multi-master replication:
+<https://en.wikipedia.org/wiki/Multi-master_replication>
+
+[5] NDB Cluster Replication: Multi-Master and Circular Replication:
+<https://dev.mysql.com/doc/refman/5.7/en/mysql-cluster-replication-multi-master.html>
+
+[6] Caching Strategies and How to Choose the Right One:
+<https://codeahoy.com/2017/08/11/caching-strategies-and-how-to-choose-the-right-one/>
+
+[7] R. Nishtala, "Facebook, Scaling Memcache at," 10th USENIX Symposium on Networked Systems Design and Implementation (NSDI ’13).
+
+[8] Single point of failure: <https://en.wikipedia.org/wiki/Single_point_of_failure>
+
+[9] Amazon CloudFront Dynamic Content Delivery:
+<https://aws.amazon.com/cloudfront/dynamic-content/>
+
+[10] Configure Sticky Sessions for Your Classic Load Balancer:
+<https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-sticky-sessions.html>
+
+[11] Active-Active for Multi-Regional Resiliency:
+<https://netflixtechblog.com/active-active-for-multi-regional-resiliency-c47719f6685b>
+
+[12] Amazon EC2 High Memory Instances:
+<https://aws.amazon.com/ec2/instance-types/high-memory/>
+
+[13] What it takes to run Stack Overflow:
+<http://nickcraver.com/blog/2013/11/22/what-it-takes-to-run-stack-overflow>
+
+[14] What The Heck Are You Actually Using NoSQL For:
+<http://highscalability.com/blog/2010/12/6/what-the-heck-are-you-actually-using-nosql-for.html>
 
 ## Back-of-the-envelope Estimation
 
@@ -268,3 +312,23 @@ Back-of-the-envelope estimation is about solving the problem
 - Write down your assumptions. It is a good idea to write down your assumptions to be referenced later.
 - Label your units. When you write down "5", does it mean 5 KB or 5 MB? You might confuse yourself with this. Write down the units because 5 MB helps to remove ambiguity.
 - Commonly asked back-of-the-envelope estimations: QPS, peak QPS, storage, cache, number of servers, etc. You can practice these calculations when preparing for an interview. Practice makes perfect.
+
+### Reference Materials
+
+[1] J. Dean.Google Pro Tip: Use Back-Of-The-Envelope-Calculations To Choose The Best Design:
+<http://highscalability.com/blog/2011/1/26/google-pro-tip-use-back-of-the-envelope-calculations-to-choo.html>
+
+[2] System design primer:
+<https://github.com/donnemartin/system-design-primer>
+
+[3] Latency Numbers Every Programmer Should Know:
+<https://colin-scott.github.io/personal_website/research/interactive_latency.html>
+
+[4] Amazon Compute Service Level Agreement:
+<https://aws.amazon.com/compute/sla/>
+
+[5] Compute Engine Service Level Agreement (SLA):
+<https://cloud.google.com/compute/sla>
+
+[6] SLA summary for Azure services:
+<https://azure.microsoft.com/en-us/support/legal/sla/summary/>
