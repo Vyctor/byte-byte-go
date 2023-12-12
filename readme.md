@@ -23,6 +23,12 @@
       - [Automation](#automation)
     - [Database scalling](#database-scalling)
     - [Millions of users and beyond](#millions-of-users-and-beyond)
+  - [Back-of-the-envelope Estimation](#back-of-the-envelope-estimation)
+    - [Power of two](#power-of-two)
+    - [Latency numbers every programmer should know](#latency-numbers-every-programmer-should-know)
+    - [Availability Numbers](#availability-numbers)
+    - [Example: Etimqate Twitter QPS and storage requirements](#example-etimqate-twitter-qps-and-storage-requirements)
+    - [Tips](#tips)
 
 ## Scale from Zero to Millions of Users
 
@@ -174,3 +180,91 @@ Scaling a system is an iterative process. Iterating on what we have learned in t
 - Scale your data tier by sharding
 - Split tiers into individual services
 - Monitor your system and use automation tools
+
+## Back-of-the-envelope Estimation
+
+Back-of-the-envelope estimation is a quick way to estimate the size of a system or a component of a system. It is a rough calculation that can be done in a short period of time. It is a good way to get a sense of the scale of the system and the challenges that you might face.
+You need to have a good sense of scalability basics to effectively carry out back-of-the-envelope estimation.
+
+### Power of two
+
+The power of two is a good way to estimate the size of a system. It is a good practice to use power of two when you are estimating the size of a system. For example, if you are estimating the number of users, you can use 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, and so on. If you are estimating the number of servers, you can use 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, and so on. If you are estimating the number of servers, you can use 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, and so on. If you are estimating the number of servers, you can use 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, and so on. If you are estimating the number of servers, you can use 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, and so on. If you are estimating the number of servers, you can use 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, and so on. If you are estimating the number of servers, you can use 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, and so on. If you are estimating the number of servers, you can use 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, and so on.
+
+### Latency numbers every programmer should know
+
+| Operation name  |  Time |
+|---|---|
+|L1 cache reference    |   0.5 ns |
+| Branch mispredict   | 5 ns|
+| L2 cache reference   | 7 ns  |
+| Mutex lock/unlock   |100 ns   |
+|Main memory reference    |100 ns   |
+| Compress 1K bytes with Zippy   |   10,000 ns = 10 µs|
+| Send 2K bytes over 1 Gbps network   |  20,000 ns = 20 µs|
+| Read 1 MB sequentially from memory   |  250,000 ns = 250 µs|
+| Round trip within the same datacenter   |   500,000 ns = 500 µs|
+|  Disk seek  |   10,000,000 ns = 10 ms|
+|  Read 1 MB sequentially from the network  |  10,000,000 ns = 10 ms|
+|  Read 1 MB sequentially from disk  |   30,000,000 ns = 30 ms|
+|  Send packet CA (California) ->Netherlands->CA  |   150,000,000 ns = 150 ms|
+
+By analyzing the numbers in Figure 1, we get the following conclusions:
+
+- Memory is fast but the disk is slow.
+- Avoid disk seeks if possible.
+- Simple compression algorithms are fast.
+- Compress data before sending it over the internet if possible.
+- Data centers are usually in different regions, and it takes time to send data between them.
+
+### Availability Numbers
+
+High availability if the ability of a system to remain in operation for a long period of time. It is usually expressed as a percentage of uptime in a year. For example, 99.99% availability means that the system is expected to be down for 52.56 minutes in a year. The following table shows the availability of different systems:
+
+| Availability  |  Downtime per year |
+|---|---|
+| 90%  | 36.5 days  |
+| 99%  | 3.65 days  |
+| 99.9%  | 8.76 hours  |
+| 99.99%  | 52.56 minutes  |
+| 99.999%  | 5.26 minutes  |
+| 99.9999%  | 31.5 seconds  |
+| 99.99999%  | 3.15 seconds  |
+| 99.999999%  | 315.6 ms  |
+
+### Example: Etimqate Twitter QPS and storage requirements
+
+Please note the following numbers are for this exercise only as they are not real numbers from Twitter.
+
+Assumptions:
+
+- 300 million monthly active users.
+- 50% of users use Twitter daily.
+- Users post 2 tweets per day on average.
+- 10% of tweets contain media.
+- Data is stored for 5 years.
+
+Estimations:
+
+Query per second (QPS) estimate:
+
+- Daily active users (DAU) = 300 million * 50% = 150 million
+- Tweets QPS = 150 million * 2 tweets / 24 hour / 3600 seconds = ~3500
+- Peek QPS = 2 * QPS = ~7000
+
+We will only estimate media storage here.
+
+- Average tweet size:
+- tweet_id 64 bytes
+- text 140 bytes
+- media 1 MB
+- Media storage: 150 million *2* 10% * 1 MB = 30 TB per day
+- 5-year media storage: 30 TB *365* 5 = ~55 PB
+
+### Tips
+
+Back-of-the-envelope estimation is about solving the problem
+
+- Rounding and Approximation. It is difficult to perform complicated math operations during the interview. For example, what is the result of "99987 / 9.1"? There is no need to spend valuable time to solve complicated math problems. Precision is not expected. Use round numbers and approximation to your advantage. The division question can be simplified as follows: 100,000 / 10.
+- Write down your assumptions. It is a good idea to write down your assumptions to be referenced later.
+- Label your units. When you write down "5", does it mean 5 KB or 5 MB? You might confuse yourself with this. Write down the units because 5 MB helps to remove ambiguity.
+- Commonly asked back-of-the-envelope estimations: QPS, peak QPS, storage, cache, number of servers, etc. You can practice these calculations when preparing for an interview. Practice makes perfect.
