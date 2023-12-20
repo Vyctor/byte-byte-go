@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+  api-nodejs-rate-limiter:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    entrypoint: .docker-compose/entrypoint.sh
+    container_name: api-nodejs-rate-limiter
+    restart: always
+    tty: true
+    ports:
+      - 9999:9999
+    environment:
+      - REDIS_HOST=redis-nodejs-rate-limiter
+      - REDIS_PORT=6379
+      - APP_PORT=9999
+    networks:
+      - nodejs-rate-limiter-network
+    volumes:
+      - .:/usr/app
+    links:
+      - redis-nodejs-rate-limiter
+    depends_on:
+      - redis-nodejs-rate-limiter
+  redis-nodejs-rate-limiter:
+    image: redis:alpine
+    container_name: redis-nodejs-rate-limiter
+    ports:
+      - 6379:6379
+    networks:
+      - nodejs-rate-limiter-network
+    volumes:
+      - .docker-compose/redis-data:/data
+    command: redis-server --appendonly yes
+
+networks:
+  nodejs-rate-limiter-network:
+    driver: bridge
